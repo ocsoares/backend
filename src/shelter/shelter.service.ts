@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { Injectable } from '@nestjs/common';
 import * as qs from 'qs';
 import { Prisma } from '@prisma/client';
@@ -17,6 +16,7 @@ import { IFilterFormProps } from './types/search.types';
 import { ShelterQueryDTO } from './dtos/ShelterQuerysDTO';
 import { CreateShelterDTO } from './dtos/CreateShelterDTO';
 import { UpdateShelterDTO } from './dtos/UpdateShelterDTO';
+import { FullUpdateShelterDTO } from './dtos/FullUpdateShelterDTO';
 
 @Injectable()
 export class ShelterService {
@@ -50,7 +50,7 @@ export class ShelterService {
     });
   }
 
-  async fullUpdate(id: string, body: z.infer<typeof FullUpdateShelterSchema>) {
+  async fullUpdate(id: string, body: FullUpdateShelterDTO) {
     const payload = FullUpdateShelterSchema.parse(body);
     await this.prismaService.shelter.update({
       where: {
