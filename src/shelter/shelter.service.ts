@@ -14,6 +14,9 @@ import { SearchSchema } from '../types';
 import { ShelterSearch, parseTagResponse } from './ShelterSearch';
 import { SupplyPriority } from '../supply/types';
 import { IFilterFormProps } from './types/search.types';
+import { ShelterQueryDTO } from './dtos/ShelterQuerysDTO';
+import { CreateShelterDTO } from './dtos/CreateShelterDTO';
+import { UpdateShelterDTO } from './dtos/UpdateShelterDTO';
 
 @Injectable()
 export class ShelterService {
@@ -23,7 +26,7 @@ export class ShelterService {
     this.loadVoluntaryIds();
   }
 
-  async store(body: z.infer<typeof CreateShelterSchema>) {
+  async store(body: CreateShelterDTO) {
     const payload = CreateShelterSchema.parse(body);
 
     await this.prismaService.shelter.create({
@@ -34,7 +37,7 @@ export class ShelterService {
     });
   }
 
-  async update(id: string, body: z.infer<typeof UpdateShelterSchema>) {
+  async update(id: string, body: UpdateShelterDTO) {
     const payload = UpdateShelterSchema.parse(body);
     await this.prismaService.shelter.update({
       where: {
@@ -107,7 +110,7 @@ export class ShelterService {
     return data;
   }
 
-  async index(query: any) {
+  async index(query: ShelterQueryDTO) {
     const {
       order,
       orderBy,
